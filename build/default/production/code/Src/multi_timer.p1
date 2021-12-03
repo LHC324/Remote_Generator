@@ -1,0 +1,265 @@
+Version 4.0 HI-TECH Software Intermediate Code
+[v F364 `(v ~T0 @X0 0 tf1`*v ]
+"18 code/Inc\multi_timer.h
+[; ;code/Inc\multi_timer.h: 18: typedef struct Timer {
+[s S3 `ul 1 `ul 1 `ul 1 `ul 1 `*v 1 `*F364 1 `*S3 1 ]
+[n S3 Timer cur_ticks cur_expired_time timeout repeat arg timeout_cb next ]
+[v F395 `(v ~T0 @X0 0 tf1`*v ]
+[v F399 `(v ~T0 @X0 0 tf1`*v ]
+"10 code/Src/multi_timer.c
+[; ;code/Src/multi_timer.c: 10: static struct Timer* head_handle = ((void*)0);
+[v _head_handle `*S3 ~T0 @X0 1 s ]
+[i _head_handle
+-> -> -> 0 `i `*v `*S3
+]
+"14
+[; ;code/Src/multi_timer.c: 14: static uint32_t _timer_ticks = 0;
+[v __timer_ticks `ul ~T0 @X0 1 s ]
+[i __timer_ticks
+-> -> -> 0 `i `l `ul
+]
+"25
+[; ;code/Src/multi_timer.c: 25: void timer_init(struct Timer* handle, void (*timeout_cb)(void *arg), uint32_t timeout, uint32_t repeat, void *arg)
+[v _timer_init `(v ~T0 @X0 1 ef5`*S3`*F395`ul`ul`*v ]
+"27
+[; ;code/Src/multi_timer.c: 27: {
+{
+[e :U _timer_init ]
+"25
+[; ;code/Src/multi_timer.c: 25: void timer_init(struct Timer* handle, void (*timeout_cb)(void *arg), uint32_t timeout, uint32_t repeat, void *arg)
+[v _handle `*S3 ~T0 @X0 1 r1 ]
+[v _timeout_cb `*F399 ~T0 @X0 1 r2 ]
+"26
+[; ;code/Src/multi_timer.c: 26: 
+[v _timeout `ul ~T0 @X0 1 r3 ]
+[v _repeat `ul ~T0 @X0 1 r4 ]
+[v _arg `*v ~T0 @X0 1 r5 ]
+"27
+[; ;code/Src/multi_timer.c: 27: {
+[f ]
+"29
+[; ;code/Src/multi_timer.c: 29:     handle->timeout_cb = timeout_cb;
+[e = . *U _handle 5 _timeout_cb ]
+"30
+[; ;code/Src/multi_timer.c: 30:     handle->timeout = timeout;
+[e = . *U _handle 2 _timeout ]
+"31
+[; ;code/Src/multi_timer.c: 31:     handle->repeat = repeat;
+[e = . *U _handle 3 _repeat ]
+"32
+[; ;code/Src/multi_timer.c: 32:     handle->cur_ticks = _timer_ticks;
+[e = . *U _handle 0 __timer_ticks ]
+"33
+[; ;code/Src/multi_timer.c: 33:     handle->cur_expired_time = handle->timeout;
+[e = . *U _handle 1 . *U _handle 2 ]
+"34
+[; ;code/Src/multi_timer.c: 34:     handle->arg = arg;
+[e = . *U _handle 4 _arg ]
+"37
+[; ;code/Src/multi_timer.c: 37: }
+[e :UE 5 ]
+}
+"44
+[; ;code/Src/multi_timer.c: 44: int timer_start(struct Timer* handle)
+[v _timer_start `(i ~T0 @X0 1 ef1`*S3 ]
+"45
+[; ;code/Src/multi_timer.c: 45: {
+{
+[e :U _timer_start ]
+"44
+[; ;code/Src/multi_timer.c: 44: int timer_start(struct Timer* handle)
+[v _handle `*S3 ~T0 @X0 1 r1 ]
+"45
+[; ;code/Src/multi_timer.c: 45: {
+[f ]
+"46
+[; ;code/Src/multi_timer.c: 46:     struct Timer* target = head_handle;
+[v _target `*S3 ~T0 @X0 1 a ]
+[e = _target _head_handle ]
+"48
+[; ;code/Src/multi_timer.c: 48:     while(target) {
+[e $U 7  ]
+[e :U 8 ]
+{
+"49
+[; ;code/Src/multi_timer.c: 49:         if(target == handle) {
+[e $ ! == _target _handle 10  ]
+{
+"50
+[; ;code/Src/multi_timer.c: 50:             return -1;
+[e ) -U -> 1 `i ]
+[e $UE 6  ]
+"51
+[; ;code/Src/multi_timer.c: 51:         }
+}
+[e :U 10 ]
+"52
+[; ;code/Src/multi_timer.c: 52:         target = target->next;
+[e = _target . *U _target 6 ]
+"53
+[; ;code/Src/multi_timer.c: 53:     }
+}
+[e :U 7 ]
+"48
+[; ;code/Src/multi_timer.c: 48:     while(target) {
+[e $ != _target -> -> 0 `i `*S3 8  ]
+[e :U 9 ]
+"54
+[; ;code/Src/multi_timer.c: 54:     handle->next = head_handle;
+[e = . *U _handle 6 _head_handle ]
+"55
+[; ;code/Src/multi_timer.c: 55:     head_handle = handle;
+[e = _head_handle _handle ]
+"57
+[; ;code/Src/multi_timer.c: 57:     return 0;
+[e ) -> 0 `i ]
+[e $UE 6  ]
+"58
+[; ;code/Src/multi_timer.c: 58: }
+[e :UE 6 ]
+}
+"65
+[; ;code/Src/multi_timer.c: 65: int timer_stop(struct Timer* handle)
+[v _timer_stop `(i ~T0 @X0 1 ef1`*S3 ]
+"66
+[; ;code/Src/multi_timer.c: 66: {
+{
+[e :U _timer_stop ]
+"65
+[; ;code/Src/multi_timer.c: 65: int timer_stop(struct Timer* handle)
+[v _handle `*S3 ~T0 @X0 1 r1 ]
+"66
+[; ;code/Src/multi_timer.c: 66: {
+[f ]
+"67
+[; ;code/Src/multi_timer.c: 67:     struct Timer** curr;
+[v _curr `**S3 ~T0 @X0 1 a ]
+"69
+[; ;code/Src/multi_timer.c: 69:     for(curr = &head_handle; *curr;) {
+{
+[e = _curr &U _head_handle ]
+[e $U 15  ]
+[e :U 12 ]
+{
+"70
+[; ;code/Src/multi_timer.c: 70:         struct Timer* entry = *curr;
+[v _entry `*S3 ~T0 @X0 1 a ]
+[e = _entry *U _curr ]
+"71
+[; ;code/Src/multi_timer.c: 71:         if(entry == handle) {
+[e $ ! == _entry _handle 16  ]
+{
+"72
+[; ;code/Src/multi_timer.c: 72:             *curr = entry->next;
+[e = *U _curr . *U _entry 6 ]
+"74
+[; ;code/Src/multi_timer.c: 74:             return 0;
+[e ) -> 0 `i ]
+[e $UE 11  ]
+"75
+[; ;code/Src/multi_timer.c: 75:         } else {
+}
+[e $U 17  ]
+[e :U 16 ]
+{
+"76
+[; ;code/Src/multi_timer.c: 76:             curr = &entry->next;
+[e = _curr &U . *U _entry 6 ]
+"77
+[; ;code/Src/multi_timer.c: 77:         }
+}
+[e :U 17 ]
+"78
+[; ;code/Src/multi_timer.c: 78:     }
+}
+[e :U 15 ]
+[e $ != *U _curr -> -> 0 `i `*S3 12  ]
+[e :U 13 ]
+}
+"80
+[; ;code/Src/multi_timer.c: 80:     return 0;
+[e ) -> 0 `i ]
+[e $UE 11  ]
+"81
+[; ;code/Src/multi_timer.c: 81: }
+[e :UE 11 ]
+}
+"88
+[; ;code/Src/multi_timer.c: 88: void timer_loop(void)
+[v _timer_loop `(v ~T0 @X0 1 ef ]
+"89
+[; ;code/Src/multi_timer.c: 89: {
+{
+[e :U _timer_loop ]
+[f ]
+"90
+[; ;code/Src/multi_timer.c: 90:     struct Timer* target;
+[v _target `*S3 ~T0 @X0 1 a ]
+"92
+[; ;code/Src/multi_timer.c: 92:     for(target = head_handle; target; target = target->next) {
+{
+[e = _target _head_handle ]
+[e $U 22  ]
+[e :U 19 ]
+{
+"96
+[; ;code/Src/multi_timer.c: 96:         if(_timer_ticks - target->cur_ticks >= target->cur_expired_time) {
+[e $ ! >= - __timer_ticks . *U _target 0 . *U _target 1 23  ]
+{
+"99
+[; ;code/Src/multi_timer.c: 99:             if(target->repeat == 0) {
+[e $ ! == . *U _target 3 -> -> -> 0 `i `l `ul 24  ]
+{
+"100
+[; ;code/Src/multi_timer.c: 100:                 timer_stop(target);
+[e ( _timer_stop (1 _target ]
+"101
+[; ;code/Src/multi_timer.c: 101:             } else {
+}
+[e $U 25  ]
+[e :U 24 ]
+{
+"102
+[; ;code/Src/multi_timer.c: 102:                 target->cur_ticks = _timer_ticks;
+[e = . *U _target 0 __timer_ticks ]
+"103
+[; ;code/Src/multi_timer.c: 103:                 target->cur_expired_time = target->repeat;
+[e = . *U _target 1 . *U _target 3 ]
+"104
+[; ;code/Src/multi_timer.c: 104:             }
+}
+[e :U 25 ]
+"105
+[; ;code/Src/multi_timer.c: 105:             target->timeout_cb(target->arg);
+[e ( *U . *U _target 5 (1 . *U _target 4 ]
+"106
+[; ;code/Src/multi_timer.c: 106:         }
+}
+[e :U 23 ]
+"107
+[; ;code/Src/multi_timer.c: 107:     }
+}
+[e = _target . *U _target 6 ]
+[e :U 22 ]
+[e $ != _target -> -> 0 `i `*S3 19  ]
+[e :U 20 ]
+}
+"108
+[; ;code/Src/multi_timer.c: 108: }
+[e :UE 18 ]
+}
+"115
+[; ;code/Src/multi_timer.c: 115: void timer_ticks(void)
+[v _timer_ticks `(v ~T0 @X0 1 ef ]
+"116
+[; ;code/Src/multi_timer.c: 116: {
+{
+[e :U _timer_ticks ]
+[f ]
+"117
+[; ;code/Src/multi_timer.c: 117:     _timer_ticks += 1;
+[e =+ __timer_ticks -> -> -> 1 `i `l `ul ]
+"118
+[; ;code/Src/multi_timer.c: 118: }
+[e :UE 26 ]
+}
